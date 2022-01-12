@@ -1,10 +1,10 @@
 extends layout
 
 block content
-  h1 Hello #{member.fullname}
-  p Welcome to Fight Club
+	h1 Hello #{member.fullname}
+	p Welcome to Fight Club
 	p Your current membership status is #{member.membership.toUpperCase()}
-	form(method='POST' action='')
+	form(method='POST' action='/membershipupgrade')
 		label(for='membershipupgrade') Upgrade your membership status by providing special code:
 		input#membershipupgrade(type='text', name='membershipupgrade' minlength=8 maxlength=32 placeholder='Your code' required=true)
 		button(type='submit') Upgrade

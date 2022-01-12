@@ -1,8 +1,8 @@
 extends layout
 
 block content
-  h1= title
-  form(method='POST' action='')
+	h1= title
+	form(method='POST' action='')
 		label(for='title') Title
 		input#title(type='text' name='title' minlength=4 maxlength=64 placeholder='Sand in fight' required=true)
 		input#messagetext(type='text' name='messagetext' minlength=8 maxlength=128 placeholder='Is it fait to use? Discuss.' required=true)
