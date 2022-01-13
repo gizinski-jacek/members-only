@@ -3,3 +3,10 @@ extends layout
 block content
 	h1= title
 	p Welcome to #{title}
+	div.main-container
+		each message in message_list
+			div.message(id= message.authorid)
+				p #{message.title}
+				p #{message.author}
+				p #{message.timestamp_formatted}
+				p #{message.text}
