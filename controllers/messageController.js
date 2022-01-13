@@ -65,3 +65,111 @@ exports.message_create_post = [
 		});
 	},
 ];
+
+exports.message_delete_get = (req, res, next) => {
+	if (!req.isAuthenticated()) {
+		return res.redirect('/log-in');
+	}
+	if (!mongoose.Types.ObjectId.isValid(req.params.messageid)) {
+		let err = new Error('Invalid message ObjectId');
+		err.status = 404;
+		return next(err);
+	}
+	if (!mongoose.Types.ObjectId.isValid(res.locals.currentUser._id)) {
+		let err = new Error('Invalid member ObjectId');
+		err.status = 404;
+		return next(err);
+	}
+	async.parallel(
+		{
+			message: (cb) => {
+				Message.findById(req.params.messageid).exec(cb);
+			},
+			member: (cb) => {
+				Member.findById(res.locals.currentUser._id).exec(cb);
+			},
+		},
+		(err, results) => {
+			if (err) {
+				return next(err);
+			}
+			if (results.message == null) {
+				let err = new Error('Message was not found');
+				err.status = 404;
+				return next(err);
+			}
+			if (results.member == null) {
+				let err = new Error('Member was not found');
+				err.status = 404;
+				return next(err);
+			}
+			if (!results.member.leader) {
+				let err = new Error(
+					'Insufficient permissions to access this page'
+				);
+				err.status = 401;
+				return next(err);
+			}
+			res.render('message-delete', {
+				title: 'Delete Message',
+				message: results.message,
+			});
+		}
+	);
+};
+
+exports.message_delete_post = (req, res, next) => {
+	if (!req.isAuthenticated()) {
+		return res.redirect('/log-in');
+	}
+	if (!mongoose.Types.ObjectId.isValid(req.params.messageid)) {
+		let err = new Error('Invalid message ObjectId');
+		err.status = 404;
+		return next(err);
+	}
+	if (!mongoose.Types.ObjectId.isValid(res.locals.currentUser._id)) {
+		let err = new Error('Invalid member ObjectId');
+		err.status = 404;
+		return next(err);
+	}
+	async.parallel(
+		{
+			message: (cb) => {
+				Message.findById(req.params.messageid).exec(cb);
+			},
+			member: (cb) => {
+				Member.findById(res.locals.currentUser._id).exec(cb);
+			},
+		},
+		(err, results) => {
+			if (err) {
+				return next(err);
+			}
+			// Should it check again for null's on POST or is it redundant?
+			//
+			// if (results.message == null) {
+			// 	let err = new Error('Message was not found');
+			// 	err.status = 404;
+			// 	return next(err);
+			// }
+			// if (results.member == null) {
+			// 	let err = new Error('Member was not found');
+			// 	err.status = 404;
+			// 	return next(err);
+			// }
+			if (!results.member.leader) {
+				let err = new Error(
+					'Insufficient permissions to perform this action'
+				);
+				err.status = 401;
+				return next(err);
+			}
+			Message.findByIdAndDelete(req.params.messageid, (err) => {
+				if (err) {
+					return next(err);
+				}
+				res.redirect('/');
+			});
+		}
+	);
+};
