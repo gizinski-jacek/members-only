@@ -9,7 +9,6 @@ exports.message_list = (req, res, next) => {
 		if (err) {
 			return next(err);
 		}
-
 		res.render('index', {
 			title: 'Fight Club',
 			message_list: message_list,
@@ -21,7 +20,7 @@ exports.message_create_get = (req, res, next) => {
 	if (!req.isAuthenticated()) {
 		return res.redirect('log-in');
 	}
-	res.render('message-form', { title: 'Post Message' });
+	res.render('message-form', { title: 'Post a Message' });
 };
 
 exports.message_create_post = [
@@ -34,6 +33,14 @@ exports.message_create_post = [
 		.isLength({ min: 8, max: 128 })
 		.escape(),
 	(req, res, next) => {
+		if (!req.isAuthenticated()) {
+			return res.redirect('/log-in');
+		}
+		if (!mongoose.Types.ObjectId.isValid(res.locals.currentUser._id)) {
+			let err = new Error('Invalid member ObjectId');
+			err.status = 404;
+			return next(err);
+		}
 		const errors = validationResult(req);
 		const newMessage = new Message({
 			title: req.body.title,
