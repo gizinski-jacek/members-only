@@ -3,8 +3,9 @@ extends layout
 block content
 	h1 Hello #{member.fullname}
 	p Welcome to Fight Club
-	p Your current membership status is #{member.membership.toUpperCase()}
-	form(method='POST' action='/membershipupgrade')
-		label(for='membershipupgrade') Upgrade your membership status by providing special code:
-		input#membershipupgrade(type='text', name='membershipupgrade' minlength=8 maxlength=32 placeholder='Your code' required=true)
-		button(type='submit') Upgrade
+	p Your current membership status is #{member.memberstatus.toUpperCase()}
+	if !currentUser.leader
+		form(method='POST' action='')
+			label(for='memberpromotion') Get promotion by providing special code:
+			input#memberpromotion(type='text', name='memberpromotion' minlength=8 maxlength=32 placeholder='Your code' required=true)
+			button(type='submit') Upgrade
