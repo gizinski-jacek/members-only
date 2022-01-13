@@ -11,6 +11,13 @@ router.get('/new-message', message_controller.message_create_get);
 
 router.post('/new-message', message_controller.message_create_post);
 
+router.get('/delete-message/:messageid', message_controller.message_delete_get);
+
+router.post(
+	'/delete-message/:messageid',
+	message_controller.message_delete_post
+);
+
 router.get('/sign-up', member_controller.member_create_get);
 
 router.post('/sign-up', member_controller.member_create_post);
