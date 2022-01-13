@@ -7,6 +7,7 @@ const passport = require('passport');
 const bcryptjs = require('bcryptjs');
 
 exports.member_create_get = (req, res, next) => {
+	req.logout();
 	res.render('sign-up-form', { title: 'Sign Up' });
 };
 
@@ -27,6 +28,16 @@ exports.member_create_post = [
 		.trim()
 		.isLength({ min: 4, max: 16 })
 		.escape(),
+	body('repeatpassword', 'Password can not be empty')
+		.trim()
+		.isLength({ min: 4, max: 16 })
+		.escape()
+		.custom((value, { req }) => {
+			if (value !== req.body.password) {
+				throw new Error('Passwords must match');
+			}
+			return true;
+		}),
 	(req, res, next) => {
 		const errors = validationResult(req);
 		const newMember = new Member({
@@ -34,39 +45,58 @@ exports.member_create_post = [
 			last_name: req.body.lastname,
 			username: req.body.username,
 		});
-		if (!errors.isEmpty()) {
-			res.render('sign-up-form', {
-				title: 'Sign Up',
-				member: newMember,
-				errors: errors.array(),
-			});
-			return;
-		}
-		bcryptjs.hashSync(req.body.password, 12, (err, hashedPass) => {
-			if (err) {
-				return next(err);
-			}
-			newMember.password = hashedPass;
-			newMember.save((err) => {
+		Member.find({ username: req.body.username })
+			.countDocuments()
+			.exec((err, memberExists) => {
 				if (err) {
 					return next(err);
 				}
-				res.redirect('/log-in');
+				if (memberExists > 0) {
+					res.render('sign-up-form', {
+						title: 'Sign Up',
+						member: newMember,
+						errors: [{ msg: 'User already exists' }],
+					});
+					return;
+				}
+				if (!errors.isEmpty()) {
+					res.render('sign-up-form', {
+						title: 'Sign Up',
+						member: newMember,
+						errors: errors.array(),
+					});
+					return;
+				}
+				bcryptjs.hash(req.body.password, 12, (err, hashedPass) => {
+					if (err) {
+						return next(err);
+					}
+					newMember.password = hashedPass;
+					newMember.save((err) => {
+						if (err) {
+							return next(err);
+						}
+						res.redirect('/log-in');
+					});
+				});
 			});
-		});
 	},
 ];
 
 exports.member_log_in_get = (req, res, next) => {
-	res.render('log-in', { title: 'Log In' });
+	if (!req.isAuthenticated()) {
+		return res.render('log-in', { title: 'Log In' });
+	}
+	res.redirect(`/member/${req.user.username}`);
 };
 
 exports.member_log_in_post = [
-	passport.authenticate('local', {
-		failureRedirect: '/log-in',
-	}),
+	passport.authenticate('local', { failureRedirect: '/log-in' }),
 	(req, res, next) => {
-		res.redirect(`/member/${req.user._id}`);
+		if (!req.user) {
+			return res.redirect('/log-in');
+		}
+		res.redirect(`/member/${req.user.username}`);
 	},
 ];
 
@@ -76,45 +106,50 @@ exports.member_log_out_get = (req, res, next) => {
 };
 
 exports.member_details_get = (req, res, next) => {
-	if (req.isAuthenticated()) {
-		if (!mongoose.Types.ObjectId.isValid(req.session.passport.user)) {
-			let err = new Error('Invalid member ObjectId');
-			err.status = 404;
-			return next(err);
-		}
-		Member.findOne({
-			username: req.params.username,
-			_id: req.session.passport.user,
-		}).exec((err, member) => {
-			if (err) {
-				return next(err);
-			}
-			if (member == null) {
-				let err = new Error('Member was not found');
-				err.status = 404;
-				return next(err);
-			}
-			res.render('member-details', {
-				title: 'Member Details',
-				member: member,
-			});
-		});
-	} else {
-		res.redirect('/log-in');
+	if (!req.isAuthenticated()) {
+		return res.redirect('/log-in');
 	}
-};
-
-exports.member_details_post = (req, res, next) => {
-	if (!mongoose.Types.ObjectId.isValid(req.params.memberid)) {
+	if (!mongoose.Types.ObjectId.isValid(res.locals.currentUser._id)) {
 		let err = new Error('Invalid member ObjectId');
 		err.status = 404;
 		return next(err);
 	}
-	body('membershipupgrade', 'Code field can not be empty')
+	Member.findOne({
+		_id: res.locals.currentUser._id,
+		username: res.locals.currentUser.username,
+	}).exec((err, member) => {
+		if (err) {
+			return next(err);
+		}
+		if (member == null) {
+			let err = new Error('Member was not found');
+			err.status = 404;
+			return next(err);
+		}
+		res.render('member-details', {
+			title: 'Member Details',
+			member: member,
+		});
+	});
+};
+
+exports.member_details_post = (req, res, next) => {
+	if (!req.isAuthenticated()) {
+		return res.redirect('log-in');
+	}
+	if (!mongoose.Types.ObjectId.isValid(res.locals.currentUser._id)) {
+		let err = new Error('Invalid member ObjectId');
+		err.status = 404;
+		return next(err);
+	}
+	body('memberpromotion', 'Code field can not be empty')
 		.trim()
 		.isLength({ min: 8, max: 32 })
 		.escape();
-	Member.findById(req.params.memberid).exec((err, member) => {
+	Member.findOne({
+		_id: res.locals.currentUser._id,
+		username: res.locals.currentUser.username,
+	}).exec((err, member) => {
 		if (err) {
 			return next(err);
 		}
@@ -130,19 +165,20 @@ exports.member_details_post = (req, res, next) => {
 				member: member,
 				errors: errors.array(),
 			});
+			return;
 		}
 		if (
-			req.body.membershipupgrade !== process.env.MEMBER_CODE &&
-			req.body.membershipupgrade !== process.env.LEADER_CODE
+			req.body.memberpromotion !== process.env.MEMBER_CODE &&
+			req.body.memberpromotion !== process.env.LEADER_CODE
 		) {
 			let err = new Error('Password was incorrect');
 			err.status = 401;
 			return next(err);
 		} else {
-			if (req.body.membershipupgrade === process.env.MEMBER_CODE) {
+			if (req.body.memberpromotion === process.env.MEMBER_CODE) {
 				Member.findByIdAndUpdate(
-					{ _id: req.params.memberid },
-					{ membership: 'fighter' },
+					res.locals.currentUser._id,
+					{ fighter: true },
 					(err, updatedMember) => {
 						if (err) {
 							return next(err);
@@ -150,11 +186,12 @@ exports.member_details_post = (req, res, next) => {
 						res.redirect(updatedMember.url);
 					}
 				);
+				return;
 			}
-			if (req.body.membershipupgrade === process.env.LEADER_CODE) {
+			if (req.body.memberpromotion === process.env.LEADER_CODE) {
 				Member.findByIdAndUpdate(
-					{ _id: req.params.memberid },
-					{ membership: 'leader', leader: true },
+					res.locals.currentUser._id,
+					{ leader: true },
 					(err, updatedMember) => {
 						if (err) {
 							return next(err);
