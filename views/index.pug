@@ -5,8 +5,12 @@ block content
 	p Welcome to #{title}
 	div.main-container
 		each message in message_list
-			div.message(id= message.authorid)
-				p #{message.title}
-				p #{message.author}
-				p #{message.timestamp_formatted}
+			div.message(id=message.authorid)
+				span.top
+					if currentUser && (currentUser.fighter || currentUser.leader)
+						p #{message.title}
+						p #{message.author}
+						p #{message.timestamp_formatted}
+					else
+						p Anonymous
 				p #{message.text}
