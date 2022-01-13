@@ -38,28 +38,28 @@ passport.use(
 			if (!user) {
 				return done(null, false, { message: 'Incorrect username' });
 			}
-			if (
-				bcryptjs.compare(password, user.password, (err, res) => {
-					if (err) {
-						return done(err);
-					}
-					if (res) {
-						// passwords match! log user in
-						return done(null, user);
-					} else {
-						// passwords do not match!
-						return done(null, false, {
-							message: 'Incorrect password',
-						});
-					}
-				})
-			) {
-				return done(null, false, { message: 'Incorrect password' });
-			}
-			return done(null, user);
+			comparePassword(password, user.password, (err, match) => {
+				if (err) {
+					return next(err);
+				}
+				if (match) {
+					return done(null, user);
+				} else {
+					return done(null, false, { message: 'Incorrect password' });
+				}
+			});
 		});
 	})
 );
+
+const comparePassword = (password, hash, cb) => {
+	bcryptjs.compare(password, hash, (err, equal) => {
+		if (err) {
+			return done(err);
+		}
+		cb(null, equal);
+	});
+};
 
 passport.serializeUser((user, done) => {
 	done(null, user.id);
