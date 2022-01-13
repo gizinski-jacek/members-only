@@ -5,9 +5,7 @@ const message_controller = require('../controllers/messageController');
 const member_controller = require('../controllers/memberController');
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
-	res.render('index', { title: 'Fight Club' });
-});
+router.get('/', message_controller.message_list);
 
 router.get('/new-message', message_controller.message_create_get);
 
