@@ -114,10 +114,7 @@ exports.member_details_get = (req, res, next) => {
 		err.status = 404;
 		return next(err);
 	}
-	Member.findOne({
-		_id: res.locals.currentUser._id,
-		username: res.locals.currentUser.username,
-	}).exec((err, member) => {
+	Member.findById(res.locals.currentUser._id).exec((err, member) => {
 		if (err) {
 			return next(err);
 		}
@@ -133,73 +130,72 @@ exports.member_details_get = (req, res, next) => {
 	});
 };
 
-exports.member_details_post = (req, res, next) => {
-	if (!req.isAuthenticated()) {
-		return res.redirect('log-in');
-	}
-	if (!mongoose.Types.ObjectId.isValid(res.locals.currentUser._id)) {
-		let err = new Error('Invalid member ObjectId');
-		err.status = 404;
-		return next(err);
-	}
+exports.member_details_post = [
 	body('memberpromotion', 'Code field can not be empty')
 		.trim()
 		.isLength({ min: 8, max: 32 })
-		.escape();
-	Member.findOne({
-		_id: res.locals.currentUser._id,
-		username: res.locals.currentUser.username,
-	}).exec((err, member) => {
-		if (err) {
-			return next(err);
+		.escape(),
+	(req, res, next) => {
+		if (!req.isAuthenticated()) {
+			return res.redirect('/log-in');
 		}
-		if (member == null) {
-			let err = new Error('Member was not found');
+		if (!mongoose.Types.ObjectId.isValid(res.locals.currentUser._id)) {
+			let err = new Error('Invalid member ObjectId');
 			err.status = 404;
 			return next(err);
 		}
-		const errors = validationResult(req);
-		if (!errors.isEmpty()) {
-			res.render('member-details', {
-				title: 'Member Details',
-				member: member,
-				errors: errors.array(),
-			});
-			return;
-		}
-		if (
-			req.body.memberpromotion !== process.env.MEMBER_CODE &&
-			req.body.memberpromotion !== process.env.LEADER_CODE
-		) {
-			let err = new Error('Password was incorrect');
-			err.status = 401;
-			return next(err);
-		} else {
-			if (req.body.memberpromotion === process.env.MEMBER_CODE) {
-				Member.findByIdAndUpdate(
-					res.locals.currentUser._id,
-					{ fighter: true },
-					(err, updatedMember) => {
-						if (err) {
-							return next(err);
-						}
-						res.redirect(updatedMember.url);
-					}
-				);
+		Member.findById(res.locals.currentUser._id).exec((err, member) => {
+			if (err) {
+				return next(err);
+			}
+			if (member == null) {
+				let err = new Error('Member was not found');
+				err.status = 404;
+				return next(err);
+			}
+			const errors = validationResult(req);
+			if (!errors.isEmpty()) {
+				res.render('member-details', {
+					title: 'Member Details',
+					member: member,
+					errors: errors.array(),
+				});
 				return;
 			}
-			if (req.body.memberpromotion === process.env.LEADER_CODE) {
-				Member.findByIdAndUpdate(
-					res.locals.currentUser._id,
-					{ leader: true },
-					(err, updatedMember) => {
-						if (err) {
-							return next(err);
+			if (
+				req.body.memberpromotion !== process.env.MEMBER_CODE &&
+				req.body.memberpromotion !== process.env.LEADER_CODE
+			) {
+				let err = new Error('Password was incorrect');
+				err.status = 401;
+				return next(err);
+			} else {
+				if (req.body.memberpromotion === process.env.MEMBER_CODE) {
+					Member.findByIdAndUpdate(
+						res.locals.currentUser._id,
+						{ fighter: true },
+						(err, updatedMember) => {
+							if (err) {
+								return next(err);
+							}
+							res.redirect(updatedMember.url);
 						}
-						res.redirect(updatedMember.url);
-					}
-				);
+					);
+					return;
+				}
+				if (req.body.memberpromotion === process.env.LEADER_CODE) {
+					Member.findByIdAndUpdate(
+						res.locals.currentUser._id,
+						{ leader: true },
+						(err, updatedMember) => {
+							if (err) {
+								return next(err);
+							}
+							res.redirect(updatedMember.url);
+						}
+					);
+				}
 			}
-		}
-	});
-};
+		});
+	},
+];
