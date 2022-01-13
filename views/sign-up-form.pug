@@ -11,6 +11,8 @@ block content
 		input#username(type='text' name='username' minlength=4 maxlength=16 placeholder='Username' required=true)
 		label(for='password') Password
 		input#password(type='password' name='password' minlength=4 maxlength=16 placeholder='Password' required=true)
+		label(for='repeatpassword') Repeat password
+		input#repeatpassword(type='password' name='repeatpassword' minlength=4 maxlength=16 placeholder='Repeat password' required=true)
 		button(type='submit') Submit
 
 	if errors
