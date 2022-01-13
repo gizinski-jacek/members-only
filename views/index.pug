@@ -11,6 +11,8 @@ block content
 						p #{message.title}
 						p #{message.author}
 						p #{message.timestamp_formatted}
+						if currentUser.leader
+							a.delete-link(href=`./delete-message/${message._id}`) X
 					else
 						p Anonymous
 				p #{message.text}
