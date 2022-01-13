@@ -1,0 +1,14 @@
+extends layout
+
+block content
+	h1= title
+	p Are you sure you want to delete this message?
+	div.message(id=message.authorid)
+		span.top
+			p #{message.title}
+			p #{message.author}
+			p #{message.timestamp_formatted}
+		p #{message.text}
+	form(method='POST' action='')
+		button(type='submit') Submit
+		button#goBack(type='button') Cancel
