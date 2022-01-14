@@ -5,11 +5,11 @@ block content
 	div.sign-up-form
 		form(method='POST' action='')
 			label(for='firstname') First name
-			input#firstname(type='text' name='firstname' minlength=2 maxlength=16 placeholder='First name' required=true)
+			input#firstname(type='text' name='firstname' minlength=2 maxlength=16 placeholder='First name' required=true value=member ? member.first_name : '')
 			label(for='lastname') Last name
-			input#lastname(type='text' name='lastname' minlength=2 maxlength=16 placeholder='Last name' required=true)
+			input#lastname(type='text' name='lastname' minlength=2 maxlength=16 placeholder='Last name' required=true value=member ? member.last_name : '')
 			label(for='username') Username
-			input#username(type='text' name='username' minlength=4 maxlength=16 placeholder='Username' required=true)
+			input#username(type='text' name='username' minlength=4 maxlength=16 placeholder='Username' required=true value=member ? member.username : '')
 			label(for='password') Password
 			input#password(type='password' name='password' minlength=4 maxlength=16 placeholder='Password' required=true)
 			label(for='repeatpassword') Repeat password
