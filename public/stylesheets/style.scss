@@ -1,8 +1,240 @@
+$red: rgb(225, 0, 0);
+$blue: rgb(125, 225, 255);
+$white: rgb(245, 245, 225);
+$green: rgb(120, 190, 40);
+$orange: rgb(225, 140, 80);
+$black: rgb(60, 65, 90);
+
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	background-color: $white;
+	font: 16px 'Lucida Grande', Helvetica, Arial, sans-serif;
+}
+
+* {
+	box-sizing: border-box;
 }
 
 a {
-  color: #00B7FF;
+	text-decoration: none;
+}
+
+h1,
+h2,
+h3 {
+	text-align: center;
+	margin: 12px;
+}
+
+h1 {
+	font-weight: 600;
+	font-size: 2rem;
+}
+
+h2 {
+	font-size: 1.75rem;
+}
+
+h3 {
+	font-size: 1.55rem;
+}
+
+p {
+	margin: 4px 0;
+}
+
+.sign-up-form,
+.log-in-form,
+.new-message-form {
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	align-items: center;
+	background-color: $orange;
+	max-width: fit-content;
+	max-height: fit-content;
+	border-radius: 12px;
+	padding: 24px;
+
+	label {
+		display: block;
+		font-size: 1.5rem;
+	}
+
+	input,
+	textarea {
+		font-size: 1rem;
+		min-width: 128px;
+		width: 100%;
+		margin: 8px 0 12px 0;
+		resize: none;
+		text-align: center;
+	}
+
+	button {
+		margin: 12px;
+	}
+}
+
+main {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+
+	> * {
+		width: 50%;
+	}
+}
+
+.navbar {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	width: 100%;
+	padding: 24px;
+	background-color: $orange;
+	font-weight: 600;
+	font-size: 1.5rem;
+
+	li {
+		display: inline-block;
+		margin: 0 12px;
+	}
+
+	a {
+		color: $black;
+	}
+
+	a:hover {
+		color: $white;
+		text-decoration: underline;
+	}
+}
+
+.member-profile {
+	form {
+		display: block;
+		text-align: center;
+
+		label {
+			display: block;
+			font-size: 1.5rem;
+		}
+
+		input {
+			font-size: 1rem;
+			min-width: 128px;
+			width: 100%;
+			margin: 8px 0 12px 0;
+			resize: none;
+		}
+
+		button {
+			margin: 12px;
+		}
+	}
+}
+
+.main-container {
+	max-height: fit-content;
+}
+
+.message {
+	margin: 24px;
+
+	.metadata {
+		max-height: fit-content;
+		width: 100%;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		white-space: nowrap;
+		background-color: $blue;
+		padding: 16px;
+		border-top-left-radius: 12px;
+		border-top-right-radius: 12px;
+
+		.right {
+			text-align: right;
+		}
+	}
+
+	.msg-content {
+		display: block;
+		max-height: fit-content;
+		min-height: 64px;
+		width: 100%;
+		padding: 16px;
+		background-color: $green;
+		border-bottom-left-radius: 12px;
+		border-bottom-right-radius: 12px;
+	}
+}
+
+.delete-controls {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+}
+
+.btn-submit,
+.btn-cancel {
+	font-weight: 600;
+	display: inline-block;
+	text-transform: uppercase;
+	border: none;
+	border-radius: 4px;
+	font-size: 1.25rem;
+	color: $black;
+	background-color: $blue;
+	padding: 4px 8px;
+}
+
+.delete-link {
+	display: inline-block;
+	text-transform: uppercase;
+	border: none;
+	font-weight: 600;
+	color: $black;
+	background-color: $red;
+	padding: 2px 4px;
+}
+
+.btn-submit:hover,
+.btn-cancel:hover,
+.delete-link:hover {
+	filter: brightness(110%);
+}
+
+.btn-submit {
+	color: $black;
+	background-color: $blue;
+}
+
+.btn-cancel {
+	color: $black;
+	background-color: $orange;
+}
+
+.error {
+	margin: 24px;
+	padding: 24px;
+	background-color: $black;
+	color: $red;
+
+	> * {
+		margin-bottom: 24px;
+	}
+}
+
+.errors-msg {
+	padding: 12px;
+	background-color: $black;
+	font-weight: 600;
+
+	li {
+		text-align: center;
+		list-style: square inside;
+		color: $red;
+	}
 }
