@@ -28,7 +28,7 @@ exports.message_create_post = [
 		.trim()
 		.isLength({ min: 4, max: 16 })
 		.escape(),
-	body('text', 'Message can not be empty')
+	body('description', 'Message can not be empty')
 		.trim()
 		.isLength({ min: 8, max: 128 })
 		.escape(),
@@ -44,11 +44,12 @@ exports.message_create_post = [
 		const errors = validationResult(req);
 		const newMessage = new Message({
 			title: req.body.title,
-			message: req.body.message,
+			description: req.body.description,
 			timestamp: Date.now(),
 			author: res.locals.currentUser.username,
 			authorid: res.locals.currentUser._id,
 		});
+		console.log(newMessage);
 		if (!errors.isEmpty()) {
 			res.render('message-form', {
 				title: 'Post Message',
