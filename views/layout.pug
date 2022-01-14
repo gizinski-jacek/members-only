@@ -2,16 +2,26 @@ doctype html
 html
 	head
 		title= title
+		link(rel='stylesheet', href='/stylesheets/reset.css')
 		link(rel='stylesheet', href='/stylesheets/style.css')
 	body
-		nav
-			a(href='/') Home
-			a(href='/new-message') Post a Message
-			if !currentUser
-				a(href='/sign-up') Sign Up
-				a(href='/log-in') Log In
-			else
-				a(href=`/member/${currentUser.username}`) Profile
-				a(href='/log-out') Log Out
-		block content
+		nav.navbar
+			ul.home-controls
+				li
+					a(href='/') Home
+				li
+					a(href='/new-message') Post a Message
+			ul.user-controls
+				if !currentUser
+					li
+						a(href='/sign-up') Sign Up
+					li
+						a(href='/log-in') Log In
+				else
+					li
+						a(href=`/member/${currentUser.username}`) Profile
+					li
+						a(href='/log-out') Log Out
+		main
+			block content
 	script(rel='javascript', src='/javascripts/goBack.js')
