@@ -1,18 +1,20 @@
 extends layout
 
 block content
-	h1= title
-	p Welcome to #{title}
+	h1 Welcome to #{title}
 	div.main-container
 		each message in message_list
-			div.message(id=message.authorid)
-				span.top
-					if currentUser && (currentUser.fighter || currentUser.leader)
-						p #{message.title}
-						p #{message.author}
-						p #{message.timestamp_formatted}
-						if currentUser.leader
-							a.delete-link(href=`./delete-message/${message._id}`) X
+			div.message(id=message._id)
+				span.metadata
+					if currentUser && (currentUser.recruit || currentUser.fighter || currentUser.leader)
+						span.left
+							p Posted by: #{message.author}
+							p Topic: #{message.title}
+						span.right
+							p Date: #{message.timestamp_formatted}
+							if currentUser.leader
+								a.delete-link(href=`./delete-message/${message._id}`) Remove
 					else
 						p Anonymous
-				p #{message.text}
+				span.msg-content
+					p #{message.message}
