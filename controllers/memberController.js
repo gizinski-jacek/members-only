@@ -148,11 +148,6 @@ exports.member_details_post = [
 			if (err) {
 				return next(err);
 			}
-			if (member == null) {
-				let err = new Error('Member was not found');
-				err.status = 404;
-				return next(err);
-			}
 			const errors = validationResult(req);
 			if (!errors.isEmpty()) {
 				res.render('member-details', {
@@ -166,9 +161,12 @@ exports.member_details_post = [
 				req.body.memberpromotion !== process.env.MEMBER_CODE &&
 				req.body.memberpromotion !== process.env.LEADER_CODE
 			) {
-				let err = new Error('Password was incorrect');
-				err.status = 401;
-				return next(err);
+				res.render('member-details', {
+					title: 'Member Details',
+					member: member,
+					errors: [{ msg: 'Incorrect promotion code' }],
+				});
+				return;
 			} else {
 				if (req.body.memberpromotion === process.env.MEMBER_CODE) {
 					Member.findByIdAndUpdate(
@@ -186,7 +184,7 @@ exports.member_details_post = [
 				if (req.body.memberpromotion === process.env.LEADER_CODE) {
 					Member.findByIdAndUpdate(
 						res.locals.currentUser._id,
-						{ leader: true },
+						{ fighter: true, leader: true },
 						(err, updatedMember) => {
 							if (err) {
 								return next(err);
