@@ -10,7 +10,7 @@ exports.message_list = (req, res, next) => {
 			return next(err);
 		}
 		res.render('index', {
-			title: 'Fight Club',
+			title: res.locals.currentUser ? 'Fight Club' : 'F Club',
 			message_list: message_list,
 		});
 	});
@@ -44,7 +44,7 @@ exports.message_create_post = [
 		const errors = validationResult(req);
 		const newMessage = new Message({
 			title: req.body.title,
-			text: req.body.text,
+			message: req.body.message,
 			timestamp: Date.now(),
 			author: res.locals.currentUser.username,
 			authorid: res.locals.currentUser._id,
@@ -90,6 +90,7 @@ exports.message_delete_get = (req, res, next) => {
 			},
 		},
 		(err, results) => {
+			console.log(req.params.messageid);
 			if (err) {
 				return next(err);
 			}
@@ -145,18 +146,6 @@ exports.message_delete_post = (req, res, next) => {
 			if (err) {
 				return next(err);
 			}
-			// Should it check again for null's on POST or is it redundant?
-			//
-			// if (results.message == null) {
-			// 	let err = new Error('Message was not found');
-			// 	err.status = 404;
-			// 	return next(err);
-			// }
-			// if (results.member == null) {
-			// 	let err = new Error('Member was not found');
-			// 	err.status = 404;
-			// 	return next(err);
-			// }
 			if (!results.member.leader) {
 				let err = new Error(
 					'Insufficient permissions to perform this action'
