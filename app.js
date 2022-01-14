@@ -11,8 +11,6 @@ const LocalStrategy = require('passport-local').Strategy;
 const bcryptjs = require('bcryptjs');
 const compression = require('compression');
 const MongoStore = require('connect-mongo');
-const sass = require('sass');
-const result = sass.compile('public/stylesheets/style.scss');
 const Member = require('./models/member');
 
 const indexRouter = require('./routes/index');
