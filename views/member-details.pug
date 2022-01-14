@@ -1,11 +1,17 @@
 extends layout
 
 block content
-	h1 Hello #{member.fullname}
-	p Welcome to Fight Club
-	p Your current membership status is #{member.memberstatus.toUpperCase()}
-	if !currentUser.leader
-		form(method='POST' action='')
-			label(for='memberpromotion') Get promotion by providing special code:
-			input#memberpromotion(type='text', name='memberpromotion' minlength=8 maxlength=32 placeholder='Your code' required=true)
-			button(type='submit') Upgrade
+	div.member-profile
+		h1 Hello #{member.fullname}
+		h3 Welcome to Fight Club
+		h3 Your current membership status is: #{member.memberstatus.toUpperCase()}
+		if !currentUser.leader
+			form(method='POST' action='')
+				label(for='memberpromotion') Get promotion by providing special code:
+				input#memberpromotion(type='text', name='memberpromotion' minlength=4 maxlength=32 placeholder='Provide promotion code' required=true)
+				button.btn-submit(type='submit') Promote
+
+			if errors
+				ol.errors-msg
+					for error in errors
+						li!= error.msg

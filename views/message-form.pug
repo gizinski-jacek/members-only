@@ -2,8 +2,15 @@ extends layout
 
 block content
 	h1= title
-	form(method='POST' action='')
-		label(for='title') Title
-		input#title(type='text' name='title' minlength=4 maxlength=64 placeholder='Sand in fight' required=true)
-		input#text(type='text' name='text' minlength=8 maxlength=128 placeholder='Is it fair to use? Discuss.' required=true)
-		button(type='submit') Submit
+	div.new-message-form
+		form(method='POST' action='')
+			label(for='title') Title
+			input#title(type='text' name='title' minlength=4 maxlength=64 placeholder='Sand in fight' required=true)
+			label(for='message') Message
+			textarea#message(type='text' name='message' rows=7 minlength=8 maxlength=128 placeholder='Is it fair to use? Discuss.' required=true)
+			button.btn-submit(type='submit') Submit
+
+		if errors
+			ol.errors-msg
+				for error in errors
+					li!= error.msg
