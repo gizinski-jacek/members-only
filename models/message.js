@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const MessageSchema = new Schema({
 	title: { type: String, minlength: 4, maxlength: 16, required: true },
-	message: { type: String, minlength: 8, maxlength: 128, required: true },
+	description: { type: String, minlength: 8, maxlength: 128, required: true },
 	timestamp: { type: Date, required: true },
 	author: { type: String, required: true },
 	authorid: { type: String, required: true },
