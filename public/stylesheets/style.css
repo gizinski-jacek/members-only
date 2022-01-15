@@ -11,13 +11,6 @@ a {
   text-decoration: none;
 }
 
-h1,
-h2,
-h3 {
-  text-align: center;
-  margin: 12px;
-}
-
 h1 {
   font-weight: 600;
   font-size: 2rem;
@@ -29,10 +22,6 @@ h2 {
 
 h3 {
   font-size: 1.55rem;
-}
-
-p {
-  margin: 4px 0;
 }
 
 .sign-up-form,
@@ -82,6 +71,10 @@ main {
 main > * {
   width: 50%;
 }
+main h1 {
+  text-align: center;
+  margin: 12px;
+}
 
 .navbar {
   display: flex;
@@ -105,6 +98,11 @@ main > * {
   text-decoration: underline;
 }
 
+.member-profile h1,
+.member-profile h3 {
+  text-align: center;
+  margin: 12px;
+}
 .member-profile form {
   display: block;
   text-align: center;
@@ -131,8 +129,8 @@ main > * {
 .message {
   margin: 24px;
 }
-.message .metadata {
-  max-height: fit-content;
+.message .top,
+.message .bottom {
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -140,21 +138,32 @@ main > * {
   white-space: nowrap;
   background-color: #7de1ff;
   padding: 16px;
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
+  border-radius: 12px 12px 0 0;
 }
-.message .metadata .right {
+.message .top .right,
+.message .bottom .right {
   text-align: right;
+  margin: auto 0;
 }
-.message .msg-content {
+.message .middle {
   display: block;
   max-height: fit-content;
-  min-height: 64px;
   width: 100%;
   padding: 16px;
-  background-color: #78be28;
-  border-bottom-left-radius: 12px;
-  border-bottom-right-radius: 12px;
+  background-color: #96c832;
+}
+.message .bottom {
+  padding: 8px 16px;
+  border-radius: 0 0 12px 12px;
+}
+.message .bottom .left {
+  margin: auto 0;
+}
+
+.message-delete h1,
+.message-delete h3 {
+  text-align: center;
+  margin: 12px;
 }
 
 .delete-controls {
@@ -182,8 +191,9 @@ main > * {
   border: none;
   font-weight: 600;
   color: #3c415a;
-  background-color: #e10000;
-  padding: 2px 4px;
+  background-color: #f00000;
+  border-radius: 4px;
+  padding: 4px 8px;
 }
 
 .btn-submit:hover,
@@ -206,7 +216,7 @@ main > * {
   margin: 24px;
   padding: 24px;
   background-color: #3c415a;
-  color: #e10000;
+  color: #f00000;
 }
 .error > * {
   margin-bottom: 24px;
@@ -220,7 +230,7 @@ main > * {
 .errors-msg li {
   text-align: center;
   list-style: square inside;
-  color: #e10000;
+  color: #f00000;
 }
 
 /*# sourceMappingURL=style.css.map */

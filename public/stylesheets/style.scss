@@ -1,7 +1,7 @@
-$red: rgb(225, 0, 0);
+$red: rgb(240, 0, 0);
 $blue: rgb(125, 225, 255);
 $white: rgb(245, 245, 225);
-$green: rgb(120, 190, 40);
+$green: rgb(150, 200, 50);
 $orange: rgb(225, 140, 80);
 $black: rgb(60, 65, 90);
 
@@ -18,13 +18,6 @@ a {
 	text-decoration: none;
 }
 
-h1,
-h2,
-h3 {
-	text-align: center;
-	margin: 12px;
-}
-
 h1 {
 	font-weight: 600;
 	font-size: 2rem;
@@ -36,10 +29,6 @@ h2 {
 
 h3 {
 	font-size: 1.55rem;
-}
-
-p {
-	margin: 4px 0;
 }
 
 .sign-up-form,
@@ -84,6 +73,11 @@ main {
 	> * {
 		width: 50%;
 	}
+
+	h1 {
+		text-align: center;
+		margin: 12px;
+	}
 }
 
 .navbar {
@@ -112,6 +106,12 @@ main {
 }
 
 .member-profile {
+	h1,
+	h3 {
+		text-align: center;
+		margin: 12px;
+	}
+
 	form {
 		display: block;
 		text-align: center;
@@ -142,8 +142,8 @@ main {
 .message {
 	margin: 24px;
 
-	.metadata {
-		max-height: fit-content;
+	.top,
+	.bottom {
 		width: 100%;
 		display: flex;
 		flex-direction: row;
@@ -151,23 +151,37 @@ main {
 		white-space: nowrap;
 		background-color: $blue;
 		padding: 16px;
-		border-top-left-radius: 12px;
-		border-top-right-radius: 12px;
+		border-radius: 12px 12px 0 0;
 
 		.right {
 			text-align: right;
+			margin: auto 0;
 		}
 	}
 
-	.msg-content {
+	.middle {
 		display: block;
 		max-height: fit-content;
-		min-height: 64px;
 		width: 100%;
 		padding: 16px;
 		background-color: $green;
-		border-bottom-left-radius: 12px;
-		border-bottom-right-radius: 12px;
+	}
+
+	.bottom {
+		padding: 8px 16px;
+		border-radius: 0 0 12px 12px;
+
+		.left {
+			margin: auto 0;
+		}
+	}
+}
+
+.message-delete {
+	h1,
+	h3 {
+		text-align: center;
+		margin: 12px;
 	}
 }
 
@@ -197,7 +211,8 @@ main {
 	font-weight: 600;
 	color: $black;
 	background-color: $red;
-	padding: 2px 4px;
+	border-radius: 4px;
+	padding: 4px 8px;
 }
 
 .btn-submit:hover,
