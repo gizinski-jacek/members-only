@@ -123,8 +123,8 @@ exports.member_details_get = (req, res, next) => {
 			err.status = 404;
 			return next(err);
 		}
-		res.render('member-details', {
-			title: 'Member Details',
+		res.render('member-profile', {
+			title: 'Member Profile',
 			member: member,
 		});
 	});
@@ -148,21 +148,24 @@ exports.member_details_post = [
 			if (err) {
 				return next(err);
 			}
+			console.log(req.body.memberpromotion == process.env.MEMBER_CODE);
 			const errors = validationResult(req);
 			if (!errors.isEmpty()) {
-				res.render('member-details', {
-					title: 'Member Details',
+				res.render('member-profile', {
+					title: 'Member Profile',
 					member: member,
 					errors: errors.array(),
 				});
 				return;
 			}
 			if (
-				req.body.memberpromotion !== process.env.MEMBER_CODE &&
-				req.body.memberpromotion !== process.env.LEADER_CODE
+				req.body.memberpromotion.toLowerCase() !==
+					process.env.MEMBER_CODE.toLowerCase() &&
+				req.body.memberpromotion.toLowerCase() !==
+					process.env.LEADER_CODE.toLowerCase()
 			) {
-				res.render('member-details', {
-					title: 'Member Details',
+				res.render('member-profile', {
+					title: 'Member Profile',
 					member: member,
 					errors: [{ msg: 'Incorrect promotion code' }],
 				});
