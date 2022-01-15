@@ -54,7 +54,6 @@ exports.message_create_post = [
 			author: res.locals.currentUser.username,
 			authorid: res.locals.currentUser._id,
 		});
-		console.log(newMessage);
 		if (!errors.isEmpty()) {
 			res.render('message-form', {
 				title: 'Post Message',
@@ -96,7 +95,6 @@ exports.message_delete_get = (req, res, next) => {
 			},
 		},
 		(err, results) => {
-			console.log(req.params.messageid);
 			if (err) {
 				return next(err);
 			}

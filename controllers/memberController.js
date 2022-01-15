@@ -148,7 +148,6 @@ exports.member_details_post = [
 			if (err) {
 				return next(err);
 			}
-			console.log(req.body.memberpromotion == process.env.MEMBER_CODE);
 			const errors = validationResult(req);
 			if (!errors.isEmpty()) {
 				res.render('member-profile', {
