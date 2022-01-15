@@ -3,18 +3,44 @@ extends layout
 block content
 	h1 Welcome to #{title}
 	div.main-container
+		if !currentUser || currentUser.recruit
+			div.message
+				span.top
+					span.left
+						h2 Welcome
+					span.right
+						p 15/01/2022, 15:00:00
+				span.middle
+					p To see more information, register an account and log in, then use the code "FIGHT CLUB" to become a full fledged member!
+				span.bottom
+					span.left
+						p Posted by: Leader
+		- message_list.sort((x, y) => {return (x.timestamp > y.timestamp) ? -1 : (x.timestamp < y.timestamp) ? 1 : 0});
 		each message in message_list
-			div.message(id=message._id)
-				span.metadata
-					if currentUser && (currentUser.recruit || currentUser.fighter || currentUser.leader)
+			if currentUser && (currentUser.fighter || currentUser.leader)
+				div.message
+					span.top
+						span.left
+							h2 #{message.title}
+						span.right
+							p #{message.timestamp_formatted}
+					span.middle
+						p #{message.description}
+					span.bottom
 						span.left
 							p Posted by: #{message.author}
-							p Topic: #{message.title}
+						if currentUser.leader
+							span.right
+								a.delete-link(href=`./delete-message/${message._id}`) Delete
+			else
+				div.message
+					span.top
+						span.left
+							h2 #{message.title}
 						span.right
-							p Date: #{message.timestamp_formatted}
-							if currentUser.leader
-								a.delete-link(href=`./delete-message/${message._id}`) Remove
-					else
-						p Anonymous
-				span.msg-content
-					p #{message.description}
+							p #{message.timestamp_formatted}
+					span.middle
+						p #{message.description}
+					span.bottom
+						span.left
+							p Posted by: Anonymous
