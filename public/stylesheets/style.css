@@ -71,7 +71,7 @@ main {
 main > * {
   width: 50%;
 }
-main h1 {
+main > h1 {
   text-align: center;
   margin: 12px;
 }
