@@ -9,7 +9,7 @@ block content
 					span.left
 						h2 Welcome
 					span.right
-						p 15/01/2022, 15:00:00
+						p
 				span.middle
 					p To see more information, register an account and log in, then use the code "FIGHT CLUB" to become a full fledged member!
 				span.bottom
@@ -29,7 +29,7 @@ block content
 					span.bottom
 						span.left
 							p Posted by: #{message.author}
-						if currentUser.leader
+						if currentUser.leader && !message.permanent
 							span.right
 								a.delete-link(href=`./delete-message/${message._id}`) Delete
 			else
@@ -38,9 +38,9 @@ block content
 						span.left
 							h2 #{message.title}
 						span.right
-							p #{message.timestamp_formatted}
+							p
 					span.middle
-						p #{message.description}
+						p.hide #{message.description}
 					span.bottom
 						span.left
 							p Posted by: Anonymous
