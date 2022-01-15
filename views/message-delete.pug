@@ -5,14 +5,16 @@ block content
 		h1= title
 		h3 Are you sure you want to delete this message?
 		div.message(id=message._id)
-			span.metadata
+			span.top
+				span.left
+					h2 #{message.title}
+				span.right
+					p #{message.timestamp_formatted}
+			span.middle
+				p #{message.description}
+			span.bottom
 				span.left
 					p Posted by: #{message.author}
-					p Topic: #{message.title}
-				span.right
-					p Date: #{message.timestamp_formatted}
-			span.msg-content
-				p #{message.description}
 		form(method='POST' action='')
 			div.delete-controls
 				button.btn-submit(type='submit') Submit
