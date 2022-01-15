@@ -165,6 +165,13 @@ main {
 		width: 100%;
 		padding: 16px;
 		background-color: $green;
+
+		.hide {
+			max-width: 50%;
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+		}
 	}
 
 	.bottom {

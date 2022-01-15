@@ -152,6 +152,12 @@ main > h1 {
   padding: 16px;
   background-color: #96c832;
 }
+.message .middle .hide {
+  max-width: 50%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 .message .bottom {
   padding: 8px 16px;
   border-radius: 0 0 12px 12px;
