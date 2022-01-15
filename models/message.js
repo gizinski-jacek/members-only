@@ -8,6 +8,7 @@ const MessageSchema = new Schema({
 	timestamp: { type: Date, required: true },
 	author: { type: String, required: true },
 	authorid: { type: String, required: true },
+	permanent: { type: Boolean, default: false },
 });
 
 // Virtual for message's URL
