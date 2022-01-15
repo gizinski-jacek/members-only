@@ -20,6 +20,11 @@ exports.message_create_get = (req, res, next) => {
 	if (!req.isAuthenticated()) {
 		return res.redirect('log-in');
 	}
+	if (!res.locals.currentUser.fighter && !res.locals.currentUser.leader) {
+		let err = new Error('Insufficient permissions to post a message');
+		err.status = 401;
+		return next(err);
+	}
 	res.render('message-form', { title: 'Post a Message' });
 };
 
