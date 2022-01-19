@@ -1,6 +1,4 @@
-const Message = require('../models/message');
 const Member = require('../models/member');
-const async = require('async');
 const { body, validationResult } = require('express-validator');
 const mongoose = require('mongoose');
 const passport = require('passport');
