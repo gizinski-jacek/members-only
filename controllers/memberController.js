@@ -1,3 +1,4 @@
+require('dotenv').config();
 const Member = require('../models/member');
 const { body, validationResult } = require('express-validator');
 const mongoose = require('mongoose');
