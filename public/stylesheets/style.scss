@@ -1,8 +1,8 @@
 $red: rgb(240, 0, 0);
-$blue: rgb(125, 225, 255);
+$blue: rgb(100, 200, 255);
 $white: rgb(245, 245, 225);
 $green: rgb(150, 200, 50);
-$orange: rgb(225, 140, 80);
+$orange: rgb(225, 125, 75);
 $black: rgb(60, 65, 90);
 
 body {
@@ -70,10 +70,6 @@ main {
 	align-items: center;
 	width: 100%;
 
-	> * {
-		width: 50%;
-	}
-
 	> h1 {
 		text-align: center;
 		margin: 12px;
@@ -84,15 +80,18 @@ main {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	width: 100%;
-	padding: 24px;
 	background-color: $orange;
 	font-weight: 600;
 	font-size: 1.5rem;
 
-	li {
-		display: inline-block;
+	.home-controls,
+	.user-controls {
 		margin: 0 12px;
+
+		li {
+			display: inline-block;
+			margin: 12px;
+		}
 	}
 
 	a {
@@ -136,35 +135,32 @@ main {
 }
 
 .main-container {
+	width: 50%;
 	max-height: fit-content;
 }
 
 .message {
-	margin: 24px;
+	margin: 12px 0;
 
 	.top,
 	.bottom {
-		width: 100%;
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
+		align-items: center;
 		white-space: nowrap;
 		background-color: $blue;
-		padding: 16px;
+		padding: 8px;
 		border-radius: 12px 12px 0 0;
-
-		.right {
-			text-align: right;
-			margin: auto 0;
-		}
 	}
 
 	.middle {
 		display: block;
 		max-height: fit-content;
-		width: 100%;
-		padding: 16px;
+		padding: 8px;
 		background-color: $green;
+		border-top: 1px solid $black;
+		border-bottom: 1px solid $black;
 
 		.hide {
 			max-width: 50%;
@@ -175,7 +171,6 @@ main {
 	}
 
 	.bottom {
-		padding: 8px 16px;
 		border-radius: 0 0 12px 12px;
 
 		.left {
@@ -203,7 +198,7 @@ main {
 	font-weight: 600;
 	display: inline-block;
 	text-transform: uppercase;
-	border: none;
+	border: 1px solid $black;
 	border-radius: 4px;
 	font-size: 1.25rem;
 	color: $black;
