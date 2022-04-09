@@ -5,7 +5,7 @@
 	"scripts": {
 		"start": "node ./bin/www",
 		"devstart": "nodemon ./bin/www",
-		"serverstart": "DEBUG=express-locallibrary-tutorial:* npm run devstart",
+		"debugstart": "DEBUG=members-only:* npm run devstart",
 		"watch-css": "sass --watch ./public/stylesheets/style.scss ./public/stylesheets/style.css",
 		"devstartcss": "npm run devstart & npm run watch-css"
 	},
