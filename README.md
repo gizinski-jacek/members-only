@@ -15,9 +15,9 @@ Made to practice working with user authentication, cookies, session using Passpo
 
 # Github & Live
 
-Github repo can be found [here](https://github.com/gizinski-jacek/members-only)
+Github repo can be found [here](https://github.com/gizinski-jacek/members-only).
 
-This repo is live on [Heroku](https://members-only-94865.herokuapp.com)
+This repo is live on [Heroku](https://members-only-94865.herokuapp.com).
 
 ## Getting Started
 
@@ -33,7 +33,7 @@ In the project root directory run the app with:
 npm run devstartcss
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ## Deploy
 
