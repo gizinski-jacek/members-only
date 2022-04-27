@@ -1,5 +1,6 @@
 body {
-  background-color: #f5f5e1;
+  min-width: 340px;
+  background-color: #f5f5ff;
   font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -69,6 +70,7 @@ main {
   width: 100%;
 }
 main > h1 {
+  white-space: nowrap;
   text-align: center;
   margin: 12px;
 }
@@ -80,22 +82,22 @@ main > h1 {
   background-color: #e17d4b;
   font-weight: 600;
   font-size: 1.5rem;
-}
-.navbar .home-controls,
-.navbar .user-controls {
-  margin: 0 12px;
+  padding: 0.5rem;
 }
 .navbar .home-controls li,
 .navbar .user-controls li {
+  white-space: nowrap;
   display: inline-block;
-  margin: 12px;
+  margin: 4px 12px;
+}
+.navbar .user-controls {
+  text-align: right;
 }
 .navbar a {
   color: #3c415a;
 }
 .navbar a:hover {
-  color: #f5f5e1;
-  text-decoration: underline;
+  color: #f5f5ff;
 }
 
 .member-profile h1,
@@ -123,12 +125,17 @@ main > h1 {
 }
 
 .main-container {
-  width: 50%;
+  flex: 1;
   max-height: fit-content;
 }
 
 .message {
-  margin: 12px 0;
+  margin: 12px;
+  border-radius: 12px;
+  background-color: #64c8ff;
+  max-width: 600px;
+  border-top: 4px solid #e17d4b;
+  border-bottom: 4px solid #e17d4b;
 }
 .message .top,
 .message .bottom {
@@ -137,9 +144,7 @@ main > h1 {
   justify-content: space-between;
   align-items: center;
   white-space: nowrap;
-  background-color: #64c8ff;
   padding: 8px;
-  border-radius: 12px 12px 0 0;
 }
 .message .middle {
   display: block;
@@ -152,14 +157,7 @@ main > h1 {
 .message .middle .hide {
   max-width: 50%;
   overflow: hidden;
-  white-space: nowrap;
   text-overflow: ellipsis;
-}
-.message .bottom {
-  border-radius: 0 0 12px 12px;
-}
-.message .bottom .left {
-  margin: auto 0;
 }
 
 .message-delete h1,
@@ -233,6 +231,14 @@ main > h1 {
   text-align: center;
   list-style: square inside;
   color: #f00000;
+}
+
+@media (max-width: 600px) {
+  .navbar .home-controls li,
+.navbar .user-controls li {
+    display: inline-block;
+    margin: 4px 12px;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */

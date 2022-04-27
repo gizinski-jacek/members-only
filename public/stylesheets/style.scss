@@ -1,11 +1,12 @@
 $red: rgb(240, 0, 0);
 $blue: rgb(100, 200, 255);
-$white: rgb(245, 245, 225);
+$white: rgb(245, 245, 255);
 $green: rgb(150, 200, 50);
 $orange: rgb(225, 125, 75);
 $black: rgb(60, 65, 90);
 
 body {
+	min-width: 340px;
 	background-color: $white;
 	font: 16px 'Lucida Grande', Helvetica, Arial, sans-serif;
 }
@@ -71,6 +72,7 @@ main {
 	width: 100%;
 
 	> h1 {
+		white-space: nowrap;
 		text-align: center;
 		margin: 12px;
 	}
@@ -83,15 +85,19 @@ main {
 	background-color: $orange;
 	font-weight: 600;
 	font-size: 1.5rem;
+	padding: 0.5rem;
 
 	.home-controls,
 	.user-controls {
-		margin: 0 12px;
-
 		li {
+			white-space: nowrap;
 			display: inline-block;
-			margin: 12px;
+			margin: 4px 12px;
 		}
+	}
+
+	.user-controls {
+		text-align: right;
 	}
 
 	a {
@@ -100,7 +106,6 @@ main {
 
 	a:hover {
 		color: $white;
-		text-decoration: underline;
 	}
 }
 
@@ -135,12 +140,17 @@ main {
 }
 
 .main-container {
-	width: 50%;
+	flex: 1;
 	max-height: fit-content;
 }
 
 .message {
-	margin: 12px 0;
+	margin: 12px;
+	border-radius: 12px;
+	background-color: $blue;
+	max-width: 600px;
+	border-top: 4px solid $orange;
+	border-bottom: 4px solid $orange;
 
 	.top,
 	.bottom {
@@ -149,9 +159,7 @@ main {
 		justify-content: space-between;
 		align-items: center;
 		white-space: nowrap;
-		background-color: $blue;
 		padding: 8px;
-		border-radius: 12px 12px 0 0;
 	}
 
 	.middle {
@@ -165,16 +173,7 @@ main {
 		.hide {
 			max-width: 50%;
 			overflow: hidden;
-			white-space: nowrap;
 			text-overflow: ellipsis;
-		}
-	}
-
-	.bottom {
-		border-radius: 0 0 12px 12px;
-
-		.left {
-			margin: auto 0;
 		}
 	}
 }
@@ -253,5 +252,17 @@ main {
 		text-align: center;
 		list-style: square inside;
 		color: $red;
+	}
+}
+
+@media (max-width: 600px) {
+	.navbar {
+		.home-controls,
+		.user-controls {
+			li {
+				display: inline-block;
+				margin: 4px 12px;
+			}
+		}
 	}
 }
