@@ -2,6 +2,9 @@ body {
   min-width: 340px;
   background-color: #f5f5ff;
   font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 * {
@@ -231,6 +234,31 @@ main > h1 {
   text-align: center;
   list-style: square inside;
   color: #f00000;
+}
+
+.footer {
+  width: 100%;
+  text-align: center;
+  background-color: #3c415a;
+}
+
+.footer a {
+  font-weight: 600;
+  color: #f5f5ff;
+  padding: 4px;
+  float: right;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.footer svg {
+  margin-left: 8px;
+  box-sizing: content-box;
+  border-radius: 50%;
+  padding: 1px;
+  background-color: #f5f5ff;
+  fill: #3c415a;
 }
 
 @media (max-width: 600px) {
