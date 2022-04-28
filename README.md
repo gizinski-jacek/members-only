@@ -17,7 +17,7 @@ Made to practice working with user authentication, cookies, session using Passpo
 
 Github repo can be found [here](https://github.com/gizinski-jacek/members-only).
 
-Live demo can be found on [Heroku](https://members-only-94865.herokuapp.com).
+Live demo can be found on [Heroku](https://members-only-194867.herokuapp.com/).
 
 ## Getting Started
 
