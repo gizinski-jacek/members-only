@@ -6,12 +6,14 @@ Made to practice working with user authentication, cookies, session using Passpo
 
 ## Table of contents
 
-- [Github & Live](#github--live)
-- [Getting Started](#getting-started)
-- [Deploy](#deploy)
-- [Features](#features)
-- [Status](#status)
-- [Contact](#contact)
+- [Members Only](#members-only)
+  - [Table of contents](#table-of-contents)
+- [Github \& Live](#github--live)
+  - [Getting Started](#getting-started)
+  - [Deploy](#deploy)
+  - [Features](#features)
+  - [Status](#status)
+  - [Contact](#contact)
 
 # Github & Live
 
@@ -47,6 +49,15 @@ curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
 heroku create
 git push heroku main
 heroku open
+```
+
+Don't forget to add **.env** file with these environmental variables for the app:
+
+```
+MONGODB_URI
+PASSPORT_SECRET
+LEADER_CODE
+MEMBER_CODE
 ```
 
 ## Features
